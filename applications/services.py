@@ -8,6 +8,17 @@ def to_application(devstack_service):
     return Application(id=devstack_service, name=devstack_service)
 
 
+def group_by(items, key_fn, merge_fn=lambda existing, curr: existing.append(curr)):
+    results = {}
+
+    for item in items:
+        key = key_fn(item)
+        group = results.setdefault(key, [])
+        merge_fn(group, item)
+
+    return results
+
+
 class DevstackApplicationService(ApplicationService):
     def __init__(self):
         self.devstack_cache = {}
@@ -24,7 +35,13 @@ class DevstackApplicationService(ApplicationService):
         )
 
     def deploy(self, deploy_targets):
-        print(f"deploying targets: {deploy_targets}")
+        targets_for_cluster = group_by(
+            deploy_targets, key_fn=lambda tgt: tgt.cluster_id
+        )
+        for cluster_id, targets in targets_for_cluster.items():
+            cluster = self._get_cluster(cluster_id)
+            deploy_request = {t.application_id: t.version for t in targets}
+            cluster.deploy(deploy_request=deploy_request)
 
         return deploy_targets
 
