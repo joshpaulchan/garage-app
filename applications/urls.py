@@ -13,4 +13,9 @@ urlpatterns = [
         views.deploy_applications_to_cluster,
         name="deploy_applications_to_cluster",
     ),
+    path(
+        "<str:cluster_id>/states",
+        views.update_application_states,
+        name="update_application_states",
+    ),
 ]
