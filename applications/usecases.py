@@ -28,3 +28,21 @@ class DeployApplicationsUseCase:
         response = self.application_service.deploy(deploy_targets=targets)
 
         return {"targets": []}
+
+
+class OperateApplicationsUseCase:
+    """Update application status (restart, stop or stop)
+
+    Returns:
+        dict -- responses
+    """
+
+    def __init__(self, application_service: ApplicationService):
+        self.application_service = application_service
+
+    def __call__(self, use_case_request):
+        target_states = use_case_request.get("target_states")
+
+        print(target_states)
+
+        return {"target_states": []}

@@ -37,10 +37,33 @@ def deploy_applications_to_cluster(request, cluster_id):
             application_id=target.get("application_id"),
             version=target.get("version"),
         )
-        for target in body.get("targets")
+        for target in body.get("targets", [])
     ]
 
     use_case_request = {"targets": targets}
     response = deploy_applications_to_cluster_use_case(use_case_request)
+
+    return JsonResponse(response)
+
+
+@require_POST
+@csrf_exempt
+def update_application_states(request, cluster_id):
+    body = json.loads(request.body)
+
+    target_states = []
+    for target in body.get("target_states", []):
+        try:
+            state = StateTarget(
+                cluster_id=cluster_id,
+                application_id=target.get("application_id"),
+                state=ApplicationState[target.get("state")],
+            )
+            target_states.append(state)
+        except KeyError:
+            pass
+
+    use_case_request = {"target_states": target_states}
+    response = set_application_states_use_case(use_case_request)
 
     return JsonResponse(response)

@@ -26,3 +26,23 @@ class DeployTarget:
             "application_id": self.application_id,
             "version": self.version,
         }
+
+
+class ApplicationState(enum.Enum):
+    STOPPED = "STOPPED"
+    STARTED = "STARTED"
+    RESTARTING = "RESTARTING"
+
+
+@dataclasses.dataclass
+class StateTarget:
+    cluster_id: str = dataclasses.field(default=None)
+    application_id: str = dataclasses.field(default=None)
+    state: ApplicationState = dataclasses.field(default=None)
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "application_id": self.application_id,
+            "state": self.state,
+        }
