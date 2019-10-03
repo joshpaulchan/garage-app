@@ -27,3 +27,8 @@ class DevstackApplicationService(ApplicationService):
                 services_and_versions,
             )
         )
+
+    def deploy(self, deploy_targets):
+        print(f"deploying targets: {deploy_targets}")
+
+        return deploy_targets

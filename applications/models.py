@@ -12,3 +12,13 @@ class Application:
 
     def to_dict(self):
         return {"id": self.id, "name": self.name}
+
+
+@dataclasses.dataclass
+class DeployTarget:
+    cluster_id: str = dataclasses.field(default=None)
+    application_id: str = dataclasses.field(default=None)
+    version: str = dataclasses.field(default=None)
+
+    def to_dict(self):
+        return {"id": self.id, "name": self.name}

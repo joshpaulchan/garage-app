@@ -7,5 +7,10 @@ urlpatterns = [
         "<str:cluster_id>",
         views.get_applications_for_cluster,
         name="get_applications_for_cluster",
-    )
+    ),
+    path(
+        "<str:cluster_id>/deploy",
+        views.deploy_applications_to_cluster,
+        name="deploy_applications_to_cluster",
+    ),
 ]

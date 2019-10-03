@@ -16,3 +16,15 @@ class GetApplicationsForCluserUseCase:
         return self.application_service.get_applications_for_cluster(
             cluster_id=cluster_id
         )
+
+
+class DeployApplicationsUseCase:
+    def __init__(self, application_service: ApplicationService):
+        self.application_service = application_service
+
+    def __call__(self, use_case_request):
+        targets = use_case_request.get("targets")
+
+        response = self.application_service.deploy(deploy_targets=targets)
+
+        return {"targets": []}
