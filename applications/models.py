@@ -21,4 +21,8 @@ class DeployTarget:
     version: str = dataclasses.field(default=None)
 
     def to_dict(self):
-        return {"id": self.id, "name": self.name}
+        return {
+            "id": self.id,
+            "application_id": self.application_id,
+            "version": self.version,
+        }
