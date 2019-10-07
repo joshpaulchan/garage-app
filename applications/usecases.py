@@ -5,6 +5,9 @@ class ApplicationService:
     def deploy(self, deploy_targets):
         raise NotImplementedError()
 
+    def update_states(self, target_states):
+        raise NotImplementedError()
+
 
 class GetApplicationsForCluserUseCase:
     def __init__(self, application_service: ApplicationService):
@@ -43,6 +46,6 @@ class OperateApplicationsUseCase:
     def __call__(self, use_case_request):
         target_states = use_case_request.get("target_states")
 
-        print(target_states)
+        response = self.application_service.update_states(target_states)
 
         return {"target_states": []}
