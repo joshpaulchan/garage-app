@@ -4,9 +4,13 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import DeployTarget
+from .models import DeployTarget, StateTarget, ApplicationState
 from .services import DevstackApplicationService
-from .usecases import GetApplicationsForCluserUseCase, DeployApplicationsUseCase
+from .usecases import (
+    GetApplicationsForCluserUseCase,
+    DeployApplicationsUseCase,
+    OperateApplicationsUseCase,
+)
 
 # Create your views here.
 
@@ -15,6 +19,9 @@ get_applications_for_cluster_use_case = GetApplicationsForCluserUseCase(
     application_service=application_service
 )
 deploy_applications_to_cluster_use_case = DeployApplicationsUseCase(
+    application_service=application_service
+)
+set_application_states_use_case = OperateApplicationsUseCase(
     application_service=application_service
 )
 

@@ -5,7 +5,7 @@ class ApplicationService:
     def deploy(self, deploy_targets):
         raise NotImplementedError()
 
-    def update_states(self, target_states):
+    def update_states(self, state_targets):
         raise NotImplementedError()
 
 

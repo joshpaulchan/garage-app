@@ -1,4 +1,5 @@
 import dataclasses
+import enum
 
 from django.db import models
 
@@ -9,6 +10,7 @@ from django.db import models
 class Application:
     id: str = dataclasses.field(default=None)
     name: str = dataclasses.field(default="")
+    version: str = dataclasses.field(default=None)
 
     def to_dict(self):
         return {"id": self.id, "name": self.name}
